@@ -1,0 +1,7 @@
+fastapi~=0.115.5
+pydantic~=2.10.2
+pydantic-settings~=2.6.1
+loguru~=0.7.2
+uvicorn~=0.32.1
+gunicorn~=23.0.0
+requests~=2.32.3

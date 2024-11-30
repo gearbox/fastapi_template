@@ -1,0 +1,68 @@
+from contextlib import asynccontextmanager
+from datetime import datetime
+
+from fastapi import FastAPI
+from fastapi.openapi.docs import (
+    get_redoc_html,
+    get_swagger_ui_html,
+    get_swagger_ui_oauth2_redirect_html,
+)
+from fastapi.staticfiles import StaticFiles
+
+from backend import error, routers
+from backend.logger import init_logging
+from backend.settings import settings
+
+
+# noinspection PyUnusedLocal
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Lifespan context manager.
+    This function is called when the application starts and stops.
+    """
+    # startup logic
+    app.start_time = datetime.utcnow()
+    init_logging()
+    yield
+    # shutdown logic
+
+
+def create_app() -> FastAPI:
+    app = FastAPI(
+        docs_url=None,
+        lifespan=lifespan,
+    )
+    app.title = settings.app_name
+    app.openapi_url = settings.openapi_url
+    app.swagger_ui_oauth2_redirect_url = settings.swagger_ui_oauth2_redirect_url
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
+    @app.get('/', include_in_schema=False)
+    @app.get('/docs', include_in_schema=False)
+    async def custom_swagger_ui_html():
+        return get_swagger_ui_html(
+            openapi_url=app.openapi_url,
+            title=app.title + ' - Swagger UI',
+            oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+            swagger_js_url="/static/openapi/swagger-ui-bundle.js",
+            swagger_css_url="/static/openapi/swagger-ui.css",
+            swagger_favicon_url="/static/openapi/favicon.png",
+        )
+
+    app.include_router(routers.main_router)
+    app.add_exception_handler(Exception, error.handle_exception)
+
+    @app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)
+    async def swagger_ui_redirect():
+        return get_swagger_ui_oauth2_redirect_html()
+
+    @app.get("/redoc", include_in_schema=False)
+    async def redoc_html():
+        return get_redoc_html(
+            openapi_url=app.openapi_url,
+            title=app.title + " - ReDoc",
+            redoc_js_url="/static/openapi/redoc.standalone.js",
+        )
+
+    return app
