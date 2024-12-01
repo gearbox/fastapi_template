@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     app_name: str = "API"
     bind_host: str = "0.0.0.0"
     bind_host_port: int = 80
-    token_header_name: str = "token-name"
+    token_header_name: str = "header-name"
     token: str = "token"
 
     # FastAPI defaults

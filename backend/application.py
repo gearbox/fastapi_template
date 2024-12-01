@@ -9,7 +9,7 @@ from fastapi.openapi.docs import (
 )
 from fastapi.staticfiles import StaticFiles
 
-from backend import error, routers
+from backend import errors, routers
 from backend.logger import init_logging
 from backend.settings import settings
 
@@ -51,7 +51,7 @@ def create_app() -> FastAPI:
         )
 
     app.include_router(routers.main_router)
-    app.add_exception_handler(Exception, error.handle_exception)
+    app.add_exception_handler(Exception, errors.handle_exception)
 
     @app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)
     async def swagger_ui_redirect():
