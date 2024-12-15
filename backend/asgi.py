@@ -10,6 +10,7 @@ def run_uvicorn():
         'asgi:app',
         host=application.settings.bind_host,
         port=application.settings.bind_host_port,
+        workers=application.settings.uvicorn_workers,
         reload=True,
     )
 

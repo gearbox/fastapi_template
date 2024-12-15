@@ -3,10 +3,10 @@ from loguru import logger
 
 from backend import schemas, managers
 
-general_router = APIRouter()
+basic_router = APIRouter()
 
 
-@general_router.get(
+@basic_router.get(
     '/healthcheck',
     status_code=HTTPStatus.HTTP_200_OK,
 )
