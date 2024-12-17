@@ -1,6 +1,6 @@
 FROM python:3.13-slim
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 COPY ./static /app/static
@@ -8,10 +8,6 @@ COPY ./static /app/static
 # copy and install requirements
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
-
-#ENV UVICORN_WORKERS 1
-#ENV BIND_HOST 0.0.0.0
-#ENV BIND_HOST_PORT 80
 
 COPY ./backend /app/backend
 

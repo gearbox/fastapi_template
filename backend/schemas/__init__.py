@@ -1,2 +1,2 @@
-from .general import *
+from .basic import *
 from .info import *
