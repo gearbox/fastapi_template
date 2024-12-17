@@ -10,3 +10,4 @@ __pycache__
 .eggs
 .env
 ___*
+/docker/var/
