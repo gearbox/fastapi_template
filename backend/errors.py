@@ -38,7 +38,7 @@ class NotAuthorizedException(GeneralProcessingException):
     """Authorisation exception class"""
 
     message = "Invalid authorization problem"
-    status_code = 401
+    status_code = 403
 
     def __init__(self, response_text=None):
         if response_text:

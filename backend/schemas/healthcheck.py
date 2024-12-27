@@ -1,0 +1,22 @@
+from datetime import datetime
+from typing import Literal
+
+from pydantic import BaseModel
+
+
+class APIHealthCheck(BaseModel):
+    status: bool = True
+    start_time: datetime | None = None
+    uptime_sec: int = 0
+    message: str = "API healthcheck Ok"
+
+
+class DBHealthCheck(BaseModel):
+    status: bool = True
+    message: str = "DB healthcheck Ok"
+
+
+class HealthCheckResponse(BaseModel):
+    status: bool = True
+    status_api: APIHealthCheck
+    status_db: DBHealthCheck

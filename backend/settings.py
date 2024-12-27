@@ -13,9 +13,16 @@ class Settings(BaseSettings):
     token_header_name: str = "header-name"
     token: str = "token"
 
+    # Postgres
+    postgres_host: str = "postgres-host"
+    postgres_port: int = 5432
+    postgres_db: str = "dbname"
+    postgres_user: str = "user"
+    postgres_password: str = "password"
+
     # Logging
     default_log_format: str = '[{time:%Y-%m-%d %H:%M:%S:%f %z}] - {name} - <level>{level}</level> - {message}'
-    log_level: str = 'INFO'
+    logging_level: str = "INFO"
 
     # Override settings with OS ENV values
     model_config = SettingsConfigDict(env_file=".env", extra='ignore')
@@ -27,3 +34,5 @@ def get_settings():
 
 
 settings = get_settings()
+postgres_db_url = f"postgresql+psycopg2://{settings.postgres_user}:{settings.postgres_password}@" \
+                  f"{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"

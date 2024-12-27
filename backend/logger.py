@@ -56,7 +56,7 @@ def init_logging():
         handlers=[
             {
                 "sink": sys.stdout,
-                "level": settings.log_level.upper(),
+                "level": settings.logging_level.upper(),
                 "format": settings.default_log_format,
                 "diagnose": False,
             }

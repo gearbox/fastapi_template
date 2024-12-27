@@ -4,11 +4,11 @@ from loguru import logger
 from backend.managers import InfoManager
 from backend import schemas
 
-info_router = APIRouter()
+router = APIRouter()
 
 
-@info_router.get(
-    '/info',
+@router.get(
+    "/info",
     status_code=HTTPStatus.HTTP_200_OK,
 )
 def info(

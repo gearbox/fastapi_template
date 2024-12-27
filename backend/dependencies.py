@@ -1,6 +1,5 @@
-from fastapi import Depends
+from fastapi import Depends, Request
 from fastapi.security import APIKeyHeader
-from starlette.requests import Request
 
 from backend import errors
 from backend.settings import settings

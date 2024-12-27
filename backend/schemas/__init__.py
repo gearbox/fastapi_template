@@ -1,2 +1,2 @@
-from .basic import *
+from .healthcheck import *
 from .info import *

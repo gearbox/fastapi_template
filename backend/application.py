@@ -10,6 +10,7 @@ from fastapi.openapi.docs import (
 from fastapi.staticfiles import StaticFiles
 
 from backend import errors, routers
+from backend.databases import postgres
 from backend.logger import init_logging
 from backend.settings import settings
 
@@ -24,11 +25,13 @@ async def lifespan(app: FastAPI):
     # startup logic
     app.start_time = datetime.utcnow()
     init_logging()
+    postgres.init_postgres()
     yield
     # shutdown logic
 
 
 def create_app() -> FastAPI:
+    # databases.postgres.init_postgres()
     app = FastAPI(
         docs_url=None,
         lifespan=lifespan,
