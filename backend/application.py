@@ -31,7 +31,6 @@ async def lifespan(app: FastAPI):
 
 
 def create_app() -> FastAPI:
-    # databases.postgres.init_postgres()
     app = FastAPI(
         docs_url=None,
         lifespan=lifespan,

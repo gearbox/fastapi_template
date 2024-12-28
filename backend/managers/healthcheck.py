@@ -11,16 +11,20 @@ from backend.schemas import DBHealthCheck, APIHealthCheck
 
 class HealthCheckManager:
 
-    def __init__(self, request: Request, db: DBSession = Depends(postgres.get_db_session)) -> None:
+    def __init__(
+            self,
+            request: Request,
+            db: DBSession = Depends(postgres.get_db_session),
+    ) -> None:
         self.db = db
-        self.request = request
+        self.app = request.app
 
     def get_api_status(self) -> APIHealthCheck:
         try:
             return APIHealthCheck(
                 status=True,
-                start_time=self.request.app.start_time,
-                uptime_sec=int((datetime.utcnow() - self.request.app.start_time).total_seconds())
+                start_time=self.app.start_time,
+                uptime_sec=int((datetime.utcnow() - self.app.start_time).total_seconds())
             )
         except Exception as e:
             error_message = f"API healthcheck failed with error: {e}"
