@@ -12,10 +12,11 @@ class APIHealthCheck(BaseModel):
 
 class DBHealthCheck(BaseModel):
     status: bool = True
-    message: str = "DB healthcheck Ok"
+    message: str = "Healthcheck Ok"
 
 
 class HealthCheckResponse(BaseModel):
     status: bool = True
     status_api: APIHealthCheck
     status_db: DBHealthCheck
+    status_redis: DBHealthCheck | None = None

@@ -20,6 +20,11 @@ class Settings(BaseSettings):
     postgres_user: str = "user"
     postgres_password: str = "password"
 
+    # Redis
+    redis_host: str = "redis-host"
+    redis_port: int = 6379
+
+
     # Logging
     default_log_format: str = '[{time:%Y-%m-%d %H:%M:%S:%f %z}] - {name} - <level>{level}</level> - {message}'
     logging_level: str = "INFO"

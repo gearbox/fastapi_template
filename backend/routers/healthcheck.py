@@ -15,11 +15,13 @@ def healthcheck(
 ) -> schemas.HealthCheckResponse:
     status_api = healthcheck_manager.get_api_status()
     status_db = healthcheck_manager.get_db_status()
-    status = status_api.status and status_db.status
+    status_redis = healthcheck_manager.get_redis_status()
+    status = status_api.status and status_db.status and status_redis.status
     if not status:
         response.status_code = HTTPStatus.HTTP_500_INTERNAL_SERVER_ERROR
     return schemas.HealthCheckResponse(
         status=status,
         status_api=status_api,
         status_db=status_db,
+        status_redis=status_redis,
     )

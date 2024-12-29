@@ -2,10 +2,11 @@ from datetime import datetime
 
 from fastapi import Depends, Request
 from loguru import logger
+from redis import Redis
 from sqlalchemy import select
 from sqlalchemy.orm import Session as DBSession
 
-from backend.databases import postgres
+from backend.databases import postgres, redis
 from backend.schemas import DBHealthCheck, APIHealthCheck
 
 
@@ -15,9 +16,11 @@ class HealthCheckManager:
             self,
             request: Request,
             db: DBSession = Depends(postgres.get_db_session),
+            redis_client: Redis = Depends(redis.get_client),
     ) -> None:
         self.db = db
         self.app = request.app
+        self.redis_client = redis_client
 
     def get_api_status(self) -> APIHealthCheck:
         try:
@@ -34,8 +37,17 @@ class HealthCheckManager:
     def get_db_status(self) -> DBHealthCheck:
         try:
             self.db.execute(select(1))
-            return DBHealthCheck(status=True)
+            return DBHealthCheck(status=True, message="DB healthcheck Ok")
         except Exception as e:
             error_message = f"DB healthcheck failed: {e}"
+            logger.error(error_message)
+            return DBHealthCheck(status=False, message=error_message)
+
+    def get_redis_status(self) -> DBHealthCheck:
+        try:
+            self.redis_client.ping()
+            return DBHealthCheck(status=True, message="Redis healthcheck Ok")
+        except Exception as e:
+            error_message = f"Redis healthcheck failed: {e}"
             logger.error(error_message)
             return DBHealthCheck(status=False, message=error_message)

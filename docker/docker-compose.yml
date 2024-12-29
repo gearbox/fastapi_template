@@ -40,6 +40,7 @@ services:
   app-postgres:
     environment:
       - BIND_HOST=${BIND_HOST}
+      - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     env_file:
@@ -67,6 +68,9 @@ services:
 
   app-redis:
     image: redis:latest
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
     container_name: app-redis
     hostname: app-redis
     networks:

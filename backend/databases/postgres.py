@@ -12,13 +12,13 @@ SessionLocal: Optional[sessionmaker] = None
 
 
 @lru_cache()
-def get_db_url() -> str:
+def get_postgres_url() -> str:
     return f"postgresql+psycopg2://{settings.postgres_user}:{settings.postgres_password}@" \
                   f"{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
 
 
 def init_postgres() -> None:
-    db_url = get_db_url()
+    db_url = get_postgres_url()
     logger.debug(f"Initializing Postgres database with URL: {db_url}")
     global engine, SessionLocal
     try:
