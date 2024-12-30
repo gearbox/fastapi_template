@@ -1,3 +1,4 @@
+![Logo](static/FastAPI_Template_Logo.png)
 # FastAPI template
 ### Purpose
 This template tends to follow best practices and patterns, and it can be used to reduce writing boilerplate code and start project asap or as a starting point in learning FastAPI framework.
