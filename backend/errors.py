@@ -1,8 +1,8 @@
 import traceback
 
 from fastapi import Request
-from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from loguru import logger
 
 
@@ -19,7 +19,7 @@ async def handle_exception(request: Request, exc: Exception):
         )
     return JSONResponse(
         status_code=code,
-        content={'type': str(type(exc)), 'message': message},
+        content={"type": str(type(exc)), "message": message},
     )
 
 

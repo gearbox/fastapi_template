@@ -1,9 +1,30 @@
 ![Logo](static/FastAPI_Template_Logo.png)
 # FastAPI template
-### Purpose
+## Purpose
 This template tends to follow best practices and patterns, and it can be used to reduce writing boilerplate code and start project asap or as a starting point in learning FastAPI framework.
 
-### Architecture
+## Quick start guide
+1. Install the UV packet manager following the [Instruction](https://github.com/astral-sh/uv) (standalone version is recommended)
+2. Install the project dependancies
+    Run the below commands in the project root directory:
+    ```shell
+    uv venv
+    uv sync
+    ```
+3. Activate the virtual environment: `source .venv/bin/activate`
+4. Using `ruff` linter
+    ### Automatic run using `pre-commit`
+    Run  `pre-commit install` in the project root directory
+    This way commands `ruff check --fix` and  `ruff format` will run after each commit using configuration from the `pyproject.toml`
+
+    ### Manual run
+    Run the below commands in the project root directory:
+    ```shell
+    ruff check --fix
+    ruff format
+    ```
+
+## Architecture
 It uses:
 - `uvicorn` as an Async Server Gateway Interface, 
 - `loguru` as a logging system with a prebuilt logs template,
@@ -21,7 +42,7 @@ We have a separate `errors.py` file for custom error handlers, `dependencies.py`
 `logger.py` is used to maintain loguru tuning and initial setup and loguru logs template is in `settings.py`.
 You can put .env file in the root of the app's folder (.env.sample is included).
 
-### Endpoints
+## Endpoints
 There are several endpoints which could be used directly or as an example:
 
 | Endpoint URL | Description                                                                                                                                       |

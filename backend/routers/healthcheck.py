@@ -1,6 +1,7 @@
-from fastapi import APIRouter, status as status_code, Depends, Response
+from fastapi import APIRouter, Depends, Response
+from fastapi import status as status_code
 
-from backend import schemas, managers
+from backend import managers, schemas
 
 router = APIRouter()
 
@@ -10,8 +11,8 @@ router = APIRouter()
     status_code=status_code.HTTP_200_OK,
 )
 def healthcheck(
-        response: Response,
-        healthcheck_manager: managers.HealthCheckManager = Depends(managers.HealthCheckManager),
+    response: Response,
+    healthcheck_manager: managers.HealthCheckManager = Depends(managers.HealthCheckManager),
 ) -> schemas.HealthCheckResponse:
     status_api = healthcheck_manager.get_api_status()
     status_db = healthcheck_manager.get_db_status()

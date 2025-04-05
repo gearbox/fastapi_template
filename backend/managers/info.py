@@ -1,5 +1,4 @@
 class InfoManager:
-
     def __init__(self):
         self.info = "Hello World"
 

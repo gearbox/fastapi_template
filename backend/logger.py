@@ -1,6 +1,7 @@
 import inspect
-import sys
 import logging
+import sys
+
 from loguru import logger
 
 from backend.settings import settings
@@ -47,7 +48,7 @@ def init_logging():
 
     logging.root.handlers = [intercept_handler]
 
-    for name in logging.root.manager.loggerDict.keys():
+    for name in logging.root.manager.loggerDict:
         logging.getLogger(name).handlers = []
         logging.getLogger(name).propagate = True
 

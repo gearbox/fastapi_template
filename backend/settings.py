@@ -1,5 +1,4 @@
 from functools import lru_cache
-from typing import Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -20,25 +19,25 @@ class Settings(BaseSettings):
     token: str = "token"
 
     # Postgres
-    postgres_host: Optional[str] = None
+    postgres_host: str | None = None
     postgres_port: int = 5432
     postgres_db: str = "dbname"
     postgres_user: str = "user"
     postgres_password: str = "password"
 
     # Redis
-    redis_host: Optional[str] = None
+    redis_host: str | None = None
     redis_port: int = 6379
 
     # Logging
-    default_log_format: str = '[{time:%Y-%m-%d %H:%M:%S:%f %z}] - {name} - <level>{level}</level> - {message}'
+    default_log_format: str = "[{time:%Y-%m-%d %H:%M:%S:%f %z}] - {name} - <level>{level}</level> - {message}"
     logging_level: str = "INFO"
 
     # Override settings with OS ENV values
-    model_config = SettingsConfigDict(env_file=".env", extra='ignore')
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
-@lru_cache()
+@lru_cache
 def get_settings():
     return Settings()
 

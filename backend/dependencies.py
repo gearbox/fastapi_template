@@ -9,6 +9,7 @@ class TokenAuth(APIKeyHeader):
     """
     Token authentication using a header.
     """
+
     async def __call__(self, request: Request):
         token = super().__call__(request=request)
         if await token != settings.token:
@@ -16,9 +17,7 @@ class TokenAuth(APIKeyHeader):
 
 
 # Dependencies which are used in all routers based on the project's settings
-common = (
-    []
-)
+common = []
 
 token_auth = [
     Depends(TokenAuth(name=settings.token_header_name)),

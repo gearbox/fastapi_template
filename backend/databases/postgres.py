@@ -1,20 +1,22 @@
+from collections.abc import Generator
 from functools import lru_cache
-from typing import Generator, Optional
 
 from loguru import logger
-from sqlalchemy import create_engine, Engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy import Engine, create_engine
+from sqlalchemy.orm import Session, sessionmaker
 
 from backend.settings import settings
 
-engine: Optional[Engine] = None
-SessionLocal: Optional[sessionmaker] = None
+engine: Engine | None = None
+SessionLocal: sessionmaker | None = None
 
 
-@lru_cache()
+@lru_cache
 def get_postgres_url() -> str:
-    return f"postgresql+psycopg2://{settings.postgres_user}:{settings.postgres_password}@" \
-                  f"{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
+    return (
+        f"postgresql+psycopg2://{settings.postgres_user}:{settings.postgres_password}@"
+        f"{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
+    )
 
 
 def init_postgres() -> None:

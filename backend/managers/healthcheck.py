@@ -1,4 +1,4 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
 from fastapi import Depends, Request
 from loguru import logger
@@ -7,17 +7,16 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session as DBSession
 
 from backend.databases import postgres, redis
-from backend.schemas import DBHealthCheck, APIHealthCheck
+from backend.schemas import APIHealthCheck, DBHealthCheck
 from backend.settings import settings
 
 
 class HealthCheckManager:
-
     def __init__(
-            self,
-            request: Request,
-            db: DBSession = Depends(postgres.get_db_session),
-            redis_client: Redis = Depends(redis.get_client),
+        self,
+        request: Request,
+        db: DBSession = Depends(postgres.get_db_session),
+        redis_client: Redis = Depends(redis.get_client),
     ) -> None:
         self.db = db
         self.app = request.app
@@ -28,7 +27,7 @@ class HealthCheckManager:
             return APIHealthCheck(
                 status=True,
                 start_time=self.app.start_time,
-                uptime_sec=int((datetime.now(UTC) - self.app.start_time).total_seconds())
+                uptime_sec=int((datetime.now(UTC) - self.app.start_time).total_seconds()),
             )
         except Exception as e:
             error_message = f"API healthcheck failed with error: {e}"

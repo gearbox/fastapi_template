@@ -7,7 +7,7 @@ app = application.create_app()
 
 def run_uvicorn():
     uvicorn.run(
-        'asgi:app',
+        "asgi:app",
         host=application.settings.bind_host,
         port=application.settings.bind_host_port,
         workers=application.settings.uvicorn_workers,
@@ -15,5 +15,5 @@ def run_uvicorn():
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_uvicorn()

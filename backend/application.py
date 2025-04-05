@@ -1,5 +1,6 @@
+import tomllib
 from contextlib import asynccontextmanager
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
 from fastapi import FastAPI
 from fastapi.openapi.docs import (
@@ -8,6 +9,7 @@ from fastapi.openapi.docs import (
     get_swagger_ui_oauth2_redirect_html,
 )
 from fastapi.staticfiles import StaticFiles
+from loguru import logger
 
 from backend import errors, routers
 from backend.databases import postgres
@@ -35,6 +37,12 @@ def create_app() -> FastAPI:
         docs_url=None,
         lifespan=lifespan,
     )
+    try:
+        with open("pyproject.toml", mode="rb") as config:
+            metadata = tomllib.load(config)
+        app.version = metadata["project"]["version"]
+    except Exception as e:
+        logger.error(f"Failed to load project version from pyproject.toml: {e}")
     app.title = settings.app_name
     app.include_router(routers.main_router)
     app.add_exception_handler(Exception, errors.handle_exception)
