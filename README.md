@@ -5,19 +5,20 @@ This template tends to follow best practices and patterns, and it can be used to
 
 ## Quick start guide
 1. Install the UV packet manager following the [Instruction](https://github.com/astral-sh/uv) (standalone version is recommended)
-2. Install the project dependancies
+1. Install the project dependancies
     Run the below commands in the project root directory:
     ```shell
     uv venv
     uv sync
     ```
-3. Activate the virtual environment: `source .venv/bin/activate`
-4. Using `ruff` linter
-    ### Automatic run using `pre-commit`
-    Run  `pre-commit install` in the project root directory
+1. Activate the virtual environment: `source .venv/bin/activate`
+### Using `ruff` linter
+- #### Automatic run using `pre-commit`
+    Run  `pre-commit install` in the project root directory.
+
     This way commands `ruff check --fix` and  `ruff format` will run after each commit using configuration from the `pyproject.toml`
 
-    ### Manual run
+- #### Manual run
     Run the below commands in the project root directory:
     ```shell
     ruff check --fix
@@ -42,6 +43,11 @@ We have a separate `errors.py` file for custom error handlers, `dependencies.py`
 `logger.py` is used to maintain loguru tuning and initial setup and loguru logs template is in `settings.py`.
 You can put .env file in the root of the app's folder (.env.sample is included).
 
+## Dev-tools
+- `uv` - packet and dependancies manager
+- `ruff` - advanced linter and formatter
+- `pre-commit` - runs linter on each commit
+
 ## Endpoints
 There are several endpoints which could be used directly or as an example:
 
@@ -52,4 +58,3 @@ There are several endpoints which could be used directly or as an example:
 | /redoc       | Default FastAPI Redoc documentation endpoint                                                                                                      |
 | /healthcheck | Endpoint that could be used to check if App is up and healthy. <br/>It returns the app uptime and start date and time, db and redis health status |
 | /info        | Sample endpoint that uses token authorisation method                                                                                              |
-
